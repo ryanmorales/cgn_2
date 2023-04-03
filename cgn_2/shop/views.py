@@ -83,7 +83,7 @@ def get_brand_products(request):
 def get_all_brands(request):
 
     if request.POST.get('action') == 'post':
-        
+    
         all_brands = Brand.objects.filter(brand_active=True)
         serialized_data = serialize("json", all_brands)
         serialized_data = json.loads(serialized_data)

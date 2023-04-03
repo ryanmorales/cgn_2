@@ -135,6 +135,7 @@ $(document).on('click', '.brand', function(e){
     const myID = e.target.id;
     const sirch = myID.split("_");
     console.log(myID);
+    console.log(sirch);
 
 
     myURL = "{% url 'get_brand_products' %}";

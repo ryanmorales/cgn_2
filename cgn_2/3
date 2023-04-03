@@ -1,3 +1,0 @@
-Requirement already satisfied: Django in /Users/ryanm/Desktop/FILES/PROJECTS/cgn_2/env/lib/python3.10/site-packages (4.1.6)
-Requirement already satisfied: asgiref<4,>=3.5.2 in /Users/ryanm/Desktop/FILES/PROJECTS/cgn_2/env/lib/python3.10/site-packages (from Django) (3.6.0)
-Requirement already satisfied: sqlparse>=0.2.2 in /Users/ryanm/Desktop/FILES/PROJECTS/cgn_2/env/lib/python3.10/site-packages (from Django) (0.4.3)
