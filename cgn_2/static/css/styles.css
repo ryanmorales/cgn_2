@@ -1,0 +1,28 @@
+.form-layout{
+
+    border-radius: 20px;
+    width: 500px;
+
+}
+/*
+.img-center {
+    text-align: center; 
+    border-radius: 8px;
+    width: 100px;
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+}
+*/
+.row {
+    display: flex;
+    margin: auto;
+}
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
