@@ -5,20 +5,6 @@ from django import forms
 
 # Create your models here.
 
-class Carousel(models.Model):
-
-    name = models.CharField(max_length=250, db_index=True)
-    slug = models.SlugField(max_length=250)
-    active = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='images/')
-
-    class Meta:
-        verbose_name_plural = 'carousels'
-
-    def __str__(self):
-        return self.name
-        
-
 class Category(models.Model):
 
     category_name = models.CharField(max_length=250, db_index=True)

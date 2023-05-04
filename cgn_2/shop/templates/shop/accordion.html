@@ -1,5 +1,5 @@
 
-
+<!--
 <div class="col-xs-4 col-md-2">   
     <div class="panel-group" id="accordion">
     
@@ -43,69 +43,54 @@
 
     </div>
 </div>
+-->
+
+<div class="col-xs-4 col-md-2">   
+    <div class="panel-group" id="accordion">
+    
+        {% for category_data in accordion_data %}
+                    
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                <a id="Category_{{ category_data.category }}" class="category" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+                    
+                    {{ category_data.category }}
+                    ({{ category_data.count}})
+                
+                </a>
+                </h5>
+            </div>
+            <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div data-item="{{ brand_data.brand_name }}">
+                        
+                        {% for brand_data in category_data.brands %}
+                        <form method="POST" action="{% url 'submit_brand_data' brand_data.brand_name %}">
+                            {% csrf_token %}
+                            <ul>
+                                <li>
+                                    <input type="hidden" name="this_brand" value="{{ brand_data.brand_name }}">
+                                    <button type="submit" class="btn btn-link btn-primary">
+                                        <a id="Category_{{ brand_data.brand_name }}" class="brand" href="#" data-item="{{ brand_data.brand_name }}">
+                                            {{ brand_data.brand_name }}
+                                        </a>
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                        {% endfor %}
+                        
+                    </div>      
+                </div>      
+            </div>    
+        </div>
+                    
+        {% endfor %}
+
+    </div>
+</div>
 
 <script>
-/*
-$(document).ready(function() {
-    $('#accordion, #brand').submit(function(event) {
-        event.preventDefault();
-        var form = $(this);
-        $.ajax({
-            type: 'POST',
-            url: '/get_brand_products/',
-            data: form.serialize(),
-            success: function(data) {
-                var container = $('#product-container');
-                container.empty();
-                $.each(data['data'], function(index, product) {
-                    container.append(
-                        `<div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${product.name}</5>
-                                </div>
-                            </div>
-                        </div>`
-                    );
-                });
-            },
-            error: function() {
-                alert('Error retrieving products');
-            }
-        });
-    });
-});
-*/
-/*
-    $(document).ready(function() {
-      $('#accordion #brand').click(function() {
-        //var brand = $(this).parent().attr('data-item');
 
-        var url = '{% url "get_brand_products" %}' ;
-
-        console.log($(this).data('item') + '-Hello');
-
-        // Send the AJAX request to fetch the data
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-                brand: $(this).data('item'),
-                csrfmiddlewaretoken: "{{csrf_token}}",
-                action: 'post'
-            },
-            success: function(data) {
-                console.log(brand)
-                //$('#universal_container').load(location.href + ' #universal_container')
-                
-            },
-            error: function(xhr, status, error) {
-                //$('.accordion-body h3').text('Error');
-                //$('.accordion-body p').text('Failed to fetch data.');
-            }
-        });
-      });
-    });
-  */
   </script>

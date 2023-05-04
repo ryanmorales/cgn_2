@@ -1,27 +1,49 @@
 from django.shortcuts import render
-from . models import Carousel, Category, Brand, Product
+from . models import Category, Brand, Product
 from django.shortcuts import get_object_or_404
 
-from django.http import JsonResponse
+from django.core.paginator import Paginator
+
+from django.http import JsonResponse, HttpResponseRedirect
 from django.core.serializers import serialize
 import json
 
-
-# Create your views here.
-
-
-def home(request):
-
-    carousel_items = Carousel.objects.filter(active=True)
-    context = {'carousel_items': carousel_items}
-    print(context)
-    return render(request, 'shop/home.html', context=context)
-
-
 def shop(request):
 
-    all_brands = Brand.objects.filter(brand_active=True)
-    context = {'all_brands': all_brands}
+    category = request.GET.get('category')
+    brand = request.GET.get('brand')
+    all_brands = request.GET.get('brands')
+    active_category = None
+    active_brand = None
+
+    products = Product.objects.filter(product_active=True)
+    context = {'products': products }    
+
+    if category:
+
+        products = Product.objects.filter(product_active=True, product_category__category_name=category)
+        active_category = category
+        
+    if brand:
+        
+        products = Product.objects.filter(product_active=True, product_brand__brand_name=brand)
+        active_brand = brand
+       
+    paginator = Paginator(products, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if all_brands:
+        brands = Brand.objects.filter(brand_active=True)
+        context = {'all_brands': brands}
+    else:
+        context = {
+                'products': products,
+                'active_category' : active_category,
+                'active_brand' : active_brand,
+                'page_obj' : page_obj,
+        }
+
     return render(request, 'shop/shop.html', context=context)
 
 
@@ -31,12 +53,17 @@ def categories(request):
     return {'all_categories': all_categories}
 
 
-def listing_categories(request, category_slug=None):
+def get_all_products(request):
 
-    category = get_object_or_404(Category, category_slug=category_slug)
-    products = Product.objects.filter(product_category=category)
+    print("Ryan")
+    all_products = Product.objects.filter(product_active=True)
+    return render(request, 'shop/shop.html', {'all_products': all_products})
 
-    return render(request)
+
+def get_all_brands(request):
+
+    all_brands = Brand.objects.filter(brand_active=True)
+    return render(request, 'shop/shop.html', {'all_brands': all_brands})
 
 
 def category_brands(request, category_slug=None):
@@ -47,8 +74,11 @@ def category_brands(request, category_slug=None):
         brands = Brand.objects.filter(brand_active=True, brand_category=category)
         brand_data = []
         for brand in brands:
+
+            products = Product.objects.filter(product_active=True, product_brand__brand_name=brand)
             brand_data.append({
-                'brand_name':brand.brand_name 
+                'brand_name':brand.brand_name, 
+                'count': len(products)
             })
         category_data.append({
             'category':category.category_name,
@@ -58,41 +88,4 @@ def category_brands(request, category_slug=None):
 
     return {'accordion_data':category_data}
  
-
-def get_brand_products(request):
-
-    if request.POST.get('data_request') == 'brand':
-
-        brand_slug = request.POST.get('data_content')
-    
-        if request.POST.get('action') == 'post':
-
-            brand = get_object_or_404(Brand, brand_slug=brand_slug.lower())
-            print(brand)     
-            brand_products = Product.objects.filter(product_active=True, product_brand=brand)
-            print(brand_products)
-
-            serialized_data = serialize("json", brand_products)
-            serialized_data = json.loads(serialized_data)
-
-            response = JsonResponse({'brand_products':serialized_data}, safe=False)
-            return response
-    else:
-        return JsonResponse({'no-data': 'No Data'})
-
-def get_all_brands(request):
-
-    if request.POST.get('action') == 'post':
-    
-        all_brands = Brand.objects.filter(brand_active=True)
-        serialized_data = serialize("json", all_brands)
-        serialized_data = json.loads(serialized_data)
-        response = JsonResponse({'brand_products':serialized_data}, safe=False)
-        return response
-        #return {'all_brands':all_brands}
-
-def get_category_products(request):
-    
-    pass
-
     

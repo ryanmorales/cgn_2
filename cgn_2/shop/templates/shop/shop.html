@@ -1,175 +1,186 @@
-{% extends "./base.html" %}
-
-{% load static %}
+<!-- product_catalog.html -->
+{% extends "base.html" %}
 
 {% block content %}
-
-<hr>
-<div class="mt-md-4">
-<div class="container">
+<div class="container mt-2 mb-2">
     <div class="row">
-
-        {% include "./accordion.html" %}
-
-        <!--
-        <div class="col-xs-4 col-md-2">   
-            <div class="panel-group" id="accordion">
-                
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <a class="btn btn-link"
+                      href="{% url 'shop' %}" 
+                      type="button" 
+                      >
+                      All Products
+                    </a>
+                  </h5>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <a class="btn btn-link"
+                      href="{% url 'shop' %}?brands=All" 
+                      type="button" 
+                      >
+                      All Brands
+                    </a>
+                  </h5>
+                </div>
+            </div>
+            <div class="myaccordion" id="accordion">
                 {% for category_data in accordion_data %}
-                
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title">
-                        <a id="Category_{{ category_data.category }}" class="category_brand" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-                            {{ category_data.category }}
-                            ({{ category_data.count}})
-                        </a>
-                        </h5>
+                <div class="card">
+                    <div class="card-header" id="heading{{ category_data.category }}">
+                        <h2 class="mb-0">
+                            <button class="d-flex align-items-center justify-content-between btn btn-link collapsed {% if category_data.category == active_category %}active{% endif %}"
+                                    data-toggle="collapse"
+                                    data-target="#collapse{{ category_data.category }}"
+                                    aria-expanded="false"
+                                    aria-controls="collapse{{ category_data.category }}">
+                                    {{ category_data.category }}
+                                    ({{ category_data.count }})
+                                <span class="fa-stack fa-sm">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </h2>
                     </div>
-                    <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div>
+                    
+                    <div id="collapse{{ category_data.category }}" 
+                            class="collapse{% if category_data.category == active_category %} show{% endif %} panel-collapse collapse in" 
+                            aria-labelledby="heading{{ category_data.category }}" 
+                            >
+                        {% if category_data.brands %}
+  
+                        <div class="card-body">
+                                                        
                                 {% for brand_data in category_data.brands %}
-                                <ul>
-                                    <li>
-                                        <a id="brand" href="#">
-                                        {{ brand_data.brand_name }}
+                                
+                                <ul class="list-group list-group-light">
+                                    <li class="list-group-item px-3 border-0 text-left">
+                                        <a id="Category_{{ brand_data.brand_name }}" 
+                                            class="text-left btn btn-link{% if brand_data.brand_name == active_brand %} active{% endif %}" 
+                                            data-target="{{ brand_data.brand_name }}"
+                                            href="{% url 'shop' %}?category={{ category_data.category }}&brand={{ brand_data.brand_name }}"  
+                                            >
+                                            {{ brand_data.brand_name }}
+                                            ({{ brand_data.count }})
                                         </a>
+                                      
                                     </li>
                                 </ul>
                                 {% endfor %}
-                            </div>
+                             
+                        </div>
+                        {% endif %}    
+                    </div>
+                    
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% if products %}
+                {% for product in page_obj %}
+                
+                <div class="col album">
+                    <a href="#">
+                    <div class="card border-info mb-3 product_card" >
+                        <img src="{{ product.product_image.url }}" 
+                            class="card-img img-fluid img-thumbnail img-responsive" 
+                            alt="{{ product.product_name }}"
+                            style="min-height:275px;  width:100%;">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ product.product_name }}</h6>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                {% endfor %}
+            {% elif all_brands %}
+                {% for brand in all_brands %}
+                <div class="col album">
+                    <div class="card border-info mb-3 brand_card">
+                        <img src="{{ brand.brand_image.url }}" 
+                            class="card-img img-fluid img-thumbnail img-responsive" 
+                            alt="{{ brand.brand_name }}"
+                            style="min-height:275px;  width:100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ brand.brand_name }}</h5>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
+            {% else %}
+                <p>No products found.</p>
+            {% endif %}
             </div>
-        </div>-->
-        <div class="col-xs-12 col-md-8">
-
-            <button id="all_brands" class="all_brands"> All Brands </button>
-            <a href="#" id="all_products" class="all_products"> All Products </a>
-            <div class="album py-1 bg-light">
-                
-                <!--<div class="pb-3 h5"> All Brands </div>-->
-                
-                <hr>
-                <div id="universal_container" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-                <!--<div class="row row-cols-sm-1">-->
-                    <!--
-                    {% for brand in all_brands %}
-
-                        {% if forloop.counter0|divisibleby:5 and not forloop.first %}
-                            <div class="w-100"></div>
-                        {% endif %}
-                            <div class="col">
-                                <div class="card shadow-sm">
-                                    <img class="img-fluid" alt="Responsive image" src="{{brand.brand_image.url}}">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            <a id="Brand_{{ brand.brand_name }}" class="text-info text-decoration-none category_brand" href="#"> {{ brand.brand_name }} </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                 
-                    {% endfor %}
-                    -->
-
-
-                    <!--                    
-                    {% for product in brand_products %}
-                        {% if forloop.counter0|divisibleby:5 and not forloop.first %}
-                            <div class="w-100"></div>
-                        {% endif %}
-                            <div class="col">
-                                <div class="card shadow-sm">
-                                    <img class="img-fluid" alt="Responsive image" src="{{product.product_image.url}}">
-                                    <div class="card-body">
-                                        <a id="#">{{ product.product_name }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                    {% endfor %}
-                    -->
-                </div>
-            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                  {% endif %}
+                  {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{ num }} <span class="sr-only">(current)</span></a>
+                    </li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
         </div>
     </div>
-    <div class="row" id="product-container"></div>
 </div>
-</div>
+
 <script>
 
-$(document).on('click', '.all_brands', function(e){
-    
-    const myID = e.target.id;
-    console.log(myID);
-    myURL = "{% url 'get_all_brands' %}";
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: myURL,
-        dataType: 'json',   
-        data: {
-            data_id: myID,
-            data_request: "all_brands",
-            csrfmiddlewaretoken: "{{ csrf_token }}",
-            action: 'post'
-        },
-        success: function(jsondata){
-            console.log(jsondata)
-                //$('#universal_container').load(' #universal_container', function(){$(this).children().unwrap()})
-            $('#universal_container').html(JSON.stringify(jsondata));
-        },
+/*
+$("#accordion").on("hide.bs.collapse show.bs.collapse", e => {
+  $(e.target)
+    .prev()
+    .find("i:last-child")
+    .toggleClass("fa-minus fa-plus");
+});
+*/
 
-        error: function(xhr, errmsg, err){
-
-        }
-    });
-
-})
-
-$(document).on('click', '.brand', function(e){
-    
-    const myID = e.target.id;
-    const sirch = myID.split("_");
-    console.log(myID);
-    console.log(sirch);
-
-
-    myURL = "{% url 'get_brand_products' %}";
-    brand = sirch[1];
-    console.log(brand)
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: myURL,
-        dataType: 'json',   
-        data: {
-            data_id: myID,
-            data_request: "brand",
-            data_content: brand,
-            csrfmiddlewaretoken: "{{ csrf_token }}",
-            action: 'post'
-        },
-        success: function(jsondata){
-            console.log(jsondata)
-                //$('#universal_container').load(' #universal_container', function(){$(this).children().unwrap()})
-            $('#universal_container').html(JSON.stringify(jsondata));
-        },
-
-        error: function(xhr, errmsg, err){
-
-        }
-    });
-})
-
-
-
-
+/*
+function fetchBrands(categoryId) {
+    console.log(categoryId);
+  $.ajax({
+    type: "GET",
+    url: "{% url 'shop' %}",
+    data: { category_id: categoryId },
+    dataType: "html",
+    success: function(response) {
+      $("#subcategories" + categoryId).html(response);
+      $("#collapse" + categoryId).collapse("show");
+    },
+    error: function(xhr, status, error) {
+      console.error(xhr.responseText);
+    }
+  });
+}
+*/
 </script>
 
+{% include "footer.html" %}
 
-{% include "./footer.html" %}
 {% endblock %}

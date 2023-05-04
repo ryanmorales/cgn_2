@@ -1,18 +1,11 @@
+/*
 .form-layout{
 
     border-radius: 20px;
     width: 500px;
 
 }
-/*
-.img-center {
-    text-align: center; 
-    border-radius: 8px;
-    width: 100px;
-    background-color: white;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
-}
-*/
+
 .row {
     display: flex;
     margin: auto;
@@ -26,3 +19,68 @@
     width: 100%;
     height: 60px;
 }
+*/
+
+body {
+    background: #F9F9F9;
+}
+
+.album {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product_card .brand_card {
+    max-width: 400px;
+    max-height: 700px;
+    overflow: hidden;
+
+}
+/*
+img {
+    width: 100%;
+    min-height: 100%;
+}
+*/
+
+.myaccordion {
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
+  
+.myaccordion .card,
+.myaccordion .card:last-child .card-header {
+    border: none;
+}
+  
+.myaccordion .card-header {
+    border-bottom-color: #EDEFF0;
+    background: transparent;
+}
+  
+.myaccordion .fa-stack {
+    font-size: 18px;
+}
+  
+.myaccordion .btn {
+    width: 100%;
+    font-weight: bold;
+    color: #004987;
+    padding: 5;
+}
+  
+.myaccordion .btn-link:hover,
+.myaccordion .btn-link:focus {
+    text-decoration: none;
+}
+  
+.myaccordion li + li {
+    margin-top: 10px;
+}
+
+
+
+
+

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<hr>
+<div class="mt-md-4">
+<div class="container">
+    <div class="row">
+
+        {% include "./accordion.html" %}
+
+        <!--
+        <div class="col-xs-4 col-md-2">   
+            <div class="panel-group" id="accordion">
+                
+                {% for category_data in accordion_data %}
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                        <a id="Category_{{ category_data.category }}" class="category_brand" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+                            {{ category_data.category }}
+                            ({{ category_data.count}})
+                        </a>
+                        </h5>
+                    </div>
+                    <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div>
+                                {% for brand_data in category_data.brands %}
+                                <ul>
+                                    <li>
+                                        <a id="brand" href="#">
+                                        {{ brand_data.brand_name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>-->
+        <div class="col-xs-12 col-md-8">
+
+            <button id="all_brands" class="all_brands"> All Brands </button>
+            <a href="#" id="all_products" class="all_products"> All Products </a>
+            <div class="album py-1 bg-light">
+                
+                <!--<div class="pb-3 h5"> All Brands </div>-->
+                
+                <hr>
+                <div id="universal_container" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+                <!--<div class="row row-cols-sm-1">-->
+                    <!--
+                    {% for brand in all_brands %}
+
+                        {% if forloop.counter0|divisibleby:5 and not forloop.first %}
+                            <div class="w-100"></div>
+                        {% endif %}
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img class="img-fluid" alt="Responsive image" src="{{brand.brand_image.url}}">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <a id="Brand_{{ brand.brand_name }}" class="text-info text-decoration-none category_brand" href="#"> {{ brand.brand_name }} </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                 
+                    {% endfor %}
+                    -->
+
+
+                    <!--                    
+                    {% for product in brand_products %}
+                        {% if forloop.counter0|divisibleby:5 and not forloop.first %}
+                            <div class="w-100"></div>
+                        {% endif %}
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img class="img-fluid" alt="Responsive image" src="{{product.product_image.url}}">
+                                    <div class="card-body">
+                                        <a id="#">{{ product.product_name }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="product-container"></div>
+</div>
+</div>
+<script>
+
+/*
+$(document).on('click', '.all_brands', function(e){
+    
+    const myID = e.target.id;
+    console.log(myID);
+    myURL = "{% url 'get_all_brands' %}";
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: myURL,
+        dataType: 'json',   
+        data: {
+            data_id: myID,
+            data_request: "all_brands",
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: 'post'
+        },
+        success: function(jsondata){
+            console.log(jsondata)
+                //$('#universal_container').load(' #universal_container', function(){$(this).children().unwrap()})
+            $('#universal_container').html(JSON.stringify(jsondata));
+        },
+
+        error: function(xhr, errmsg, err){
+
+        }
+    });
+
+})
+
+$(document).on('click', '.brand', function(e){
+    
+    const myID = e.target.id;
+    const sirch = myID.split("_");
+    //console.log(myID);
+    //console.log(sirch);
+
+
+    myURL = "{% url 'get_brand_products' 'Epson' %}";
+    brand = sirch[1];
+    //console.log(brand)
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: myURL,
+        dataType: 'json',   
+        data: {
+            data_id: myID,
+            data_request: "brand",
+            data_content: brand,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: 'post'
+        },
+        success: function(jsondata){
+            //console.log(jsondata)
+                //$('#universal_container').load(' #universal_container', function(){$(this).children().unwrap()})
+            $('#universal_container').html(JSON.stringify(jsondata));
+        },
+
+        error: function(xhr, errmsg, err){
+
+        }
+    });
+})
+
+*/
+
+
+</script>
+
+
+{% include "footer.html" %}
+{% endblock %}
