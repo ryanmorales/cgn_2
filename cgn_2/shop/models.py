@@ -3,13 +3,15 @@ from django.db import models
 from django.urls import reverse
 from django import forms
 
-# Create your models here.
+from ckeditor.fields import RichTextField
+
 
 class Category(models.Model):
 
     category_name = models.CharField(max_length=250, db_index=True)
     category_slug = models.SlugField(max_length=250)
-    category_description = models.TextField(max_length=1200)
+    #category_description = models.TextField(max_length=1200)
+    category_description = RichTextField()
     category_active = models.BooleanField(default=False)
     
     class Meta:
@@ -26,7 +28,8 @@ class Brand(models.Model):
 
     brand_name = models.CharField(max_length=250, db_index=True)
     brand_slug = models.SlugField(max_length=250)
-    brand_description = models.TextField(max_length=1200)
+    #brand_description = models.TextField(max_length=1200)
+    brand_description = RichTextField()
     brand_active = models.BooleanField(default=False)
     brand_image = models.ImageField(upload_to='images/brands/')
 
@@ -46,7 +49,8 @@ class Product(models.Model):
 
     product_name = models.CharField(max_length=250, db_index=True)
     product_slug = models.SlugField(max_length=250)
-    product_description = models.TextField(max_length=1200)
+    #product_description = models.TextField(max_length=1200)
+    product_description = RichTextField()
     product_active = models.BooleanField(default=False)
     product_image = models.ImageField(upload_to='images/products/')
 

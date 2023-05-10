@@ -1,98 +1,27 @@
 <!-- product_catalog.html -->
 {% extends "base.html" %}
 
+{% block title %} Shop {% endblock title %}
+
 {% block content %}
 <div class="container mt-2 mb-2">
     <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <a class="btn btn-link"
-                      href="{% url 'shop' %}" 
-                      type="button" 
-                      >
-                      All Products
-                    </a>
-                  </h5>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <a class="btn btn-link"
-                      href="{% url 'shop' %}?brands=All" 
-                      type="button" 
-                      >
-                      All Brands
-                    </a>
-                  </h5>
-                </div>
-            </div>
-            <div class="myaccordion" id="accordion">
-                {% for category_data in accordion_data %}
-                <div class="card">
-                    <div class="card-header" id="heading{{ category_data.category }}">
-                        <h2 class="mb-0">
-                            <button class="d-flex align-items-center justify-content-between btn btn-link collapsed {% if category_data.category == active_category %}active{% endif %}"
-                                    data-toggle="collapse"
-                                    data-target="#collapse{{ category_data.category }}"
-                                    aria-expanded="false"
-                                    aria-controls="collapse{{ category_data.category }}">
-                                    {{ category_data.category }}
-                                    ({{ category_data.count }})
-                                <span class="fa-stack fa-sm">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                </span>
-                            </button>
-                        </h2>
-                    </div>
-                    
-                    <div id="collapse{{ category_data.category }}" 
-                            class="collapse{% if category_data.category == active_category %} show{% endif %} panel-collapse collapse in" 
-                            aria-labelledby="heading{{ category_data.category }}" 
-                            >
-                        {% if category_data.brands %}
-  
-                        <div class="card-body">
-                                                        
-                                {% for brand_data in category_data.brands %}
-                                
-                                <ul class="list-group list-group-light">
-                                    <li class="list-group-item px-3 border-0 text-left">
-                                        <a id="Category_{{ brand_data.brand_name }}" 
-                                            class="text-left btn btn-link{% if brand_data.brand_name == active_brand %} active{% endif %}" 
-                                            data-target="{{ brand_data.brand_name }}"
-                                            href="{% url 'shop' %}?category={{ category_data.category }}&brand={{ brand_data.brand_name }}"  
-                                            >
-                                            {{ brand_data.brand_name }}
-                                            ({{ brand_data.count }})
-                                        </a>
-                                      
-                                    </li>
-                                </ul>
-                                {% endfor %}
-                             
-                        </div>
-                        {% endif %}    
-                    </div>
-                    
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+
+        {% include "shop/accordion.html" %}
+
         <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-3">
             {% if products %}
                 {% for product in page_obj %}
                 
                 <div class="col album">
-                    <a href="#">
+                    <a href="{% url 'product_detail' pk=product.pk %}?category={{ product.product_category }}&brand={{ product.product_brand }}">
                     <div class="card border-info mb-3 product_card" >
                         <img src="{{ product.product_image.url }}" 
                             class="card-img img-fluid img-thumbnail img-responsive" 
                             alt="{{ product.product_name }}"
-                            style="min-height:275px;  width:100%;">
+                            style="min-height:275px;  width:100%;"
+                            >
                         <div class="card-body">
                             <h6 class="card-title">{{ product.product_name }}</h6>
                         </div>
@@ -152,33 +81,6 @@
 
 <script>
 
-/*
-$("#accordion").on("hide.bs.collapse show.bs.collapse", e => {
-  $(e.target)
-    .prev()
-    .find("i:last-child")
-    .toggleClass("fa-minus fa-plus");
-});
-*/
-
-/*
-function fetchBrands(categoryId) {
-    console.log(categoryId);
-  $.ajax({
-    type: "GET",
-    url: "{% url 'shop' %}",
-    data: { category_id: categoryId },
-    dataType: "html",
-    success: function(response) {
-      $("#subcategories" + categoryId).html(response);
-      $("#collapse" + categoryId).collapse("show");
-    },
-    error: function(xhr, status, error) {
-      console.error(xhr.responseText);
-    }
-  });
-}
-*/
 </script>
 
 {% include "footer.html" %}

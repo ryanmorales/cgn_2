@@ -1,55 +1,43 @@
 {% extends "base.html" %}
 
-<title>Contact Us</title>
-<style>
-    /*
-    .vl {
-        border-left: 4px solid green;
-        height: 600px;
-    }
-    */
-</style>
 {% load static %}
-
+{% block title %} Contact Us {% endblock title %}
 {% block content %}
 
-<div class="mt-md-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h4 align="center">HOW CAN WE HELP?</h4>
+<div class="container mt-2 mb-2">
+    <div class="row">
+        <div class="col-sm">
+            <h4 align="center">HOW CAN WE HELP?</h4>
             
-                <form method="submit" class="post-form" enctype="multipart/form-data" id="form" onsubmit="event.preventDefault();">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder=" Your Name">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="organization">Organization:</label>
-                            <input type="text" class="form-control" id="organization" name="organization"
-                                placeholder="Your Organization">
-                        </div>
+            <form method="submit" class="post-form" enctype="multipart/form-data" id="form" onsubmit="event.preventDefault();">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder=" Your Name">
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                    <div class="form-group col-md-6">
+                        <label for="organization">Organization:</label>
+                        <input type="text" class="form-control" id="organization" name="organization"
+                            placeholder="Your Organization">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email"
                             placeholder="Your Email Address">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Message:</label>
-                        <textarea class="form-control" id="message" name="message" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <br>
-                    <br>
-                </form>
-            </div>
-
+                </div>
+                <div class="form-group">
+                    <label for="description">Message:</label>
+                    <textarea class="form-control" id="message" name="message" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <br>
+                <br>
+            </form>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <script>

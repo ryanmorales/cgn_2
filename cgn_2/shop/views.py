@@ -88,4 +88,18 @@ def category_brands(request, category_slug=None):
 
     return {'accordion_data':category_data}
  
+
+def product_detail(request, pk):
+    
+    product = get_object_or_404(Product, pk=pk)
+    category = request.GET.get('category')
+    brand = request.GET.get('brand')
+
+    context = {
+            'product': product,
+            'active_category' : category,
+            'active_brand' : brand,
+    }
+
+    return render(request, 'shop/product_detail.html', context=context)
     

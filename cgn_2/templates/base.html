@@ -22,8 +22,7 @@
         
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        
-
+ 
         <!-- JavaScript -->
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -35,22 +34,20 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         
-        
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
         
     </head>
 
-    <title> Creativ </title>
+    <title>Creativ - {% block title %} {% endblock title %}</title>
 
+    <nav class="navbar navbar-expand-lg bg-primary justify-content-center steady_nav">
 
-    <nav class="navbar navbar-expand-lg bg-primary justify-content-center">
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-
-        <a class="navbar-brand main-heading text-white" href=""> 
-                
-        &nbsp; &nbsp; CGN Marketing
-        
+        <a class="navbar-brand main-heading text-white" href="{% url 'home' %}"> 
+            <img src="{% static 'media/images/logo/Logo.png' %}" style="max-width:25%;" class="img-fluid" alt="Responsive image" />                
+            &nbsp; &nbsp; <b> CGN Marketing </b>
         </a>
 
 
@@ -66,7 +63,7 @@
             <span class="navbar-toggler-icon"></span>
 
         </button>
-
+        <!--
         <div class="collapse navbar-collapse" id="navbarCollapse">        
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item dropdown">
@@ -92,25 +89,37 @@
                 </li>
             </ul>
         </div>
-
+        -->
         <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">    
             <ul class="navbar-nav ms-auto">
                     
                     <li class="nav-item">
-                        <a class="btn btn-alert navbar-btn text-white" type="button"  href="{% url 'home' %}"> Home </a>
+                        <a class="btn btn-alert navbar-btn text-danger text-white" type="button"  href="{% url 'home' %}">
+                            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                            Home
+                        </a>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="btn btn-alert navbar-btn text-white" type="button"  href="{% url 'shop' %}"> Shop </a>
+                        <a class="btn btn-alert navbar-btn text-danger text-white" type="button"  href="{% url 'shop' %}">
+                            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i> 
+                            Shop
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="btn btn-alert navbar-btn text-white" type="button"  href="{% url 'contact_us' %}"> Contact Us </a>
+                        <a class="btn btn-alert navbar-btn text-danger text-white" type="button"  href="{% url 'contact_us' %}">
+                            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                            Contact Us
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="btn btn-alert navbar-btn text-white" type="button"  href=""> About Us </a>
+                        <a class="btn btn-alert navbar-btn text-danger text-white" type="button"  href="{% url 'about_us' %}">
+                            <i class="fa fa-info fa-2x" aria-hidden="true"></i>
+                            About Us
+                        </a>
                     </li>
 
 
