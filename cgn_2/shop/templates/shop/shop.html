@@ -10,22 +10,23 @@
         {% include "shop/accordion.html" %}
 
         <div class="col-md-9">
+            <hr>
             <div class="row row-cols-1 row-cols-md-3">
             {% if products %}
                 {% for product in page_obj %}
                 
                 <div class="col album">
                     <a href="{% url 'product_detail' pk=product.pk %}?category={{ product.product_category }}&brand={{ product.product_brand }}">
-                    <div class="card border-info mb-3 product_card" >
-                        <img src="{{ product.product_image.url }}" 
-                            class="card-img img-fluid img-thumbnail img-responsive" 
-                            alt="{{ product.product_name }}"
-                            style="min-height:275px;  width:100%;"
-                            >
-                        <div class="card-body">
-                            <h6 class="card-title">{{ product.product_name }}</h6>
+                        <div class="card border-info mb-3 product_card" >
+                            <img src="{{ product.product_image.url }}" 
+                                class="card-img img-fluid img-thumbnail img-responsive" 
+                                alt="{{ product.product_name }}"
+                                style="min-height:275px;  width:100%;"
+                                >
+                            <div class="card-body">
+                                <h6 class="card-title">{{ product.product_name }}</h6>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
 
@@ -33,15 +34,17 @@
             {% elif all_brands %}
                 {% for brand in all_brands %}
                 <div class="col album">
-                    <div class="card border-info mb-3 brand_card">
-                        <img src="{{ brand.brand_image.url }}" 
-                            class="card-img img-fluid img-thumbnail img-responsive" 
-                            alt="{{ brand.brand_name }}"
-                            style="min-height:275px;  width:100%;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ brand.brand_name }}</h5>
+                    <a href="{% url 'shop' %}?category={{ products.product_category }}&brand={{ brand.brand_name }}">
+                        <div class="card border-info mb-3 brand_card">
+                            <img src="{{ brand.brand_image.url }}" 
+                                class="card-img img-fluid img-thumbnail img-responsive" 
+                                alt="{{ brand.brand_name }}"
+                                style="min-height:275px;  width:100%;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ brand.brand_name }}</h5>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 {% endfor %}
             {% else %}
