@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'mathfilters',
     'ckeditor',
     'ckeditor_uploader',
+    'phonenumber_field',
+    'phonenumbers',
+
 
 ]
 
@@ -150,15 +153,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Email configuration
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = '587'
-#EMAIL_USE_TLS = 'True'
-
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 EMAIL_HOST_USER = 'darrenblue14@gmail.com'
-#EMAIL_HOST_PASSWORD = 'yqmstizbigwjyowm'
+EMAIL_HOST_PASSWORD = 'yqmstizbigwjyowm'
 
 CKEDITOR_CONFIGS = {
     'default': {

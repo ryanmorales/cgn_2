@@ -155,7 +155,7 @@ body {
 /** MAGNIFY PORTION**/
 
 #row1 {
-    padding: 10px;
+    padding: 40px;
 }
 
 .mag {
@@ -169,13 +169,13 @@ body {
 }
 
 .mag1 {
-    width: 300px;
+    width: 350px;
     margin: 0 auto;
     float: none;
 }
 
 .mag1 img {
-        max-width: 90%;
+        max-width: 100%;
 }
 
 .mag2 {

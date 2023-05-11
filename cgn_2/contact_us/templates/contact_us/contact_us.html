@@ -9,29 +9,36 @@
         <div class="col-sm">
             <h4 align="center">HOW CAN WE HELP?</h4>
             
-            <form method="submit" class="post-form" enctype="multipart/form-data" id="form" onsubmit="event.preventDefault();">
+            <form method="submit" class="post-form needs-validation" enctype="multipart/form-data" id="form" onsubmit="event.preventDefault();">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder=" Your Name">
+                        <input required type="text" class="form-control" id="name" name="name" placeholder=" Your Name">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="organization">Organization:</label>
-                        <input type="text" class="form-control" id="organization" name="organization"
+                        <input required type="text" class="form-control" id="organization" name="organization"
                             placeholder="Your Organization">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email"
+                    <input required type="email" class="form-control" id="email" name="email"
                             placeholder="Your Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone:</label>
+                    <input required type="tel" class="form-control" id="phone_number" name="phone_number"
+                            placeholder="Your phone/cell number">
                 </div>
                 <div class="form-group">
                     <label for="description">Message:</label>
                     <textarea class="form-control" id="message" name="message" rows="2"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submit_id" class="btn btn-primary">
+                    Submit
+                </button>
                 <br>
                 <br>
             </form>
@@ -45,6 +52,7 @@
 $(document).on('submit', function(e){
 
     e.preventDefault();
+    startSpinner();
     $.ajax({
 
         type: 'POST',
@@ -55,9 +63,15 @@ $(document).on('submit', function(e){
             organization: $('#organization').val(),
             email: $('#email').val(),
             message: $('#message').val(),
+            phone_number: $('#phone_number').val(),
             csrfmiddlewaretoken: "{{ csrf_token }}",
             action: 'post'
         },
+        
+        //beforeSend: function(){
+            // Show image container
+            //$("#loader").show();
+        //},
 
         success: function(json){
             console.log(json)
@@ -68,10 +82,30 @@ $(document).on('submit', function(e){
             console.log(errmsg)
             window.location.replace("{% url 'contact_failed' %}");
         },
+        
+    })
+    .always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown) {           
+            // do when complete, even on error            
+            // stop the spinner
+            stopSpinner();
     });
+
 })
 
+function startSpinner() {
+    // your code to make the spinner start
+    $("#submit_id").prop("disabled", true);
+    $("#submit_id").html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Sending...`
+    );
+}
 
+function stopSpinner() {
+    // you code to make the spinner stop
+    // (i.e., return the button to its original state)
+    $("#submit_id").prop("disabled", false);
+    $("#submit_id").html('Submit');
+}
 </script>
 
 
